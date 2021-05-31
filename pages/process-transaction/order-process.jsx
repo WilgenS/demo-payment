@@ -1,16 +1,14 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Flex, Heading } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 async function paymentRequest(id) {
     try {
         const res = await fetch(
             process.env.NEXT_PUBLIC_REST_API + '/paymentPH1/' + id,
             {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+            
                 method: 'POST',
             }
         );
@@ -25,23 +23,27 @@ const transaction = () => {
     const router = useRouter();
     const [message, setmessage] = useState('');
     const [code, setcode] = useState('') ;
+    useEffect(() => {
+        if (router.query.id === undefined) {
+            return;
+        }
 
-
-    if (router.query.id != undefined) {
         paymentRequest(router.query.id)
-            .then(function (result) {
-                console.log("Entra al metodo ")
-               setmessage(result.status.message.description);
-                setcode(result.status.code);
-                
-                return result;
-            })
-            .catch(function (error) {
-                console.log(
-                    'The error is handled, continue normally. ' + error
-                );
-            });
-    }
+        .then(function (result) {
+            console.log("Entra al metodo ")
+           setmessage(result.status.message.description);
+            setcode(result.status.code);
+            
+            return result;
+        })
+        .catch(function (error) {
+            console.log(
+                'The error is handled, continue normally. ' + error
+            );
+        });
+    }, [router.query.id])
+
+  
 
     return (
         <Flex height="100vh" alignItems="center" justifyContent="center">
