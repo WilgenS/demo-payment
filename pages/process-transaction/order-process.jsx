@@ -20,7 +20,7 @@ const transaction = () => {
         )
             .then((res) => res.json())
             .then((res) => {
-                console.log(res.status.message);
+                console.log(res.status);
                 setmessage(res.status.message + '\n');
                 setcode(result.status.code);
             })
