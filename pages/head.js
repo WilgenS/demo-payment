@@ -1,12 +1,11 @@
 import React from "react";
 import {
   Heading,
-  Flex
+  Flex,
+  Link
 } from "@chakra-ui/react";
 
-
 const Header = (props) => {
-
   return (
     <Flex
       as="nav"
@@ -19,9 +18,9 @@ const Header = (props) => {
       {...props}
     >
       <Flex alignItems="center" textAlign="center" mr={5} justifyContent="center">
-      Demo Formulario de pago
 
         <Heading as="h1" textAlign="center" size="lg" letterSpacing={"tighter"}>
+            <Link href="/" >Demo Formulario de pago</Link>
         </Heading>
       </Flex>
 

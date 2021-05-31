@@ -12,20 +12,21 @@ const transaction = () => {
             return;
         }
 
-        fetch(process.env.NEXT_PUBLIC_REST_API + '/paymentPH1/' + router.query.id, {
-            method: 'POST',
-        })
+        fetch(
+            process.env.NEXT_PUBLIC_REST_API + '/paymentPH1/' + router.query.id,
+            {
+                method: 'POST',
+            }
+        )
             .then((res) => res.json())
             .then((res) => {
-                setmessage(res.status.message);
+                console.log(res.status.message);
+                setmessage(res.status.message + '\n');
                 setcode(result.status.code);
             })
             .catch(function (error) {
-                console.log(
-                    'The error is handled, continue normally. ', error
-                );
+                console.log('The error is handled, continue normally. ', error);
             });
-
     }, [router.query.id]);
 
     return (
@@ -37,7 +38,11 @@ const transaction = () => {
                 p={12}
                 rounded={10}
             >
-                <Heading mb={6}>{message}</Heading>
+                <Heading color={code === 200 ? 'green' : 'red'} mb={10}>
+                    {code === 200
+                        ? 'Transaccion completada en modo test'
+                        : 'Error: ' + message}
+                </Heading>
             </Flex>
         </Flex>
     );
