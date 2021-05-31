@@ -12,7 +12,7 @@ const transaction = () => {
             return;
         }
 
-        fetch(process.env.NEXT_PUBLIC_REST_API + '/paymentPH1/' + id, {
+        fetch(process.env.NEXT_PUBLIC_REST_API + '/paymentPH1/' + router.query.id, {
             method: 'POST',
         })
             .then((res) => res.json())
