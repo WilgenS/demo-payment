@@ -22,7 +22,7 @@ const transaction = () => {
             })
             .catch(function (error) {
                 console.log(
-                    'The error is handled, continue normally. ' + error
+                    'The error is handled, continue normally. ', error
                 );
             });
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { Flex } from '@chakra-ui/react';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 //Metodo Post para obtener el checkout Id
 async function checkoutValue() {
@@ -34,18 +34,37 @@ async function checkoutValue() {
 const paymentcard = () => {
     const url = process.env.NEXT_PUBLIC_ShopperResultUrl;
     const [checkout, setcheckout] = useState({ checkOutId: '' });
+    const router = useRouter();
 
-    //Resolviendo la promise
-    checkoutValue().then(function (result) {
-        if (result.data != undefined) {
-            setcheckout(result.data.checkOutId);
+
+    useEffect(() => {
+        if (router.query.paymentcard === undefined) {
+            return;
         }
-        return result.data;
-    }).catch(function(error) {
 
-        console.log("The error is handled, continue normally. " + error);
-      
-      });
+        fetch(process.env.NEXT_PUBLIC_REST_API + '/token_create', {
+            body: JSON.stringify({
+                amount: router.query.paymentcard,
+                amountBase0: 1,
+                amountBaseImp: 1,
+                amountIVA: 1,
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: 'POST',
+        })
+            .then((res) => res.json())
+            .then((res) => {
+               console.log("Token Return");
+                if (res.data != undefined) {
+                    setcheckout(res.data.checkOutId);
+                }
+            })
+            .catch(function (error) {
+                console.log('The error is handled, continue normally. ', error);
+            });
+    }, [router.query.paymentcard]);
 
     return (
         <div>
