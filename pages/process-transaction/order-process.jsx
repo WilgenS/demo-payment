@@ -3,47 +3,30 @@ import { useRouter } from 'next/router';
 import { Flex, Heading } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 
-async function paymentRequest(id) {
-    try {
-        const res = await fetch(
-            process.env.NEXT_PUBLIC_REST_API + '/paymentPH1/' + id,
-            {
-            
-                method: 'POST',
-            }
-        );
-        const result = await res.json();
-        return result;
-    } catch (error) {
-        console.log(error);
-    }
-}
-
 const transaction = () => {
     const router = useRouter();
     const [message, setmessage] = useState('');
-    const [code, setcode] = useState('') ;
+    const [code, setcode] = useState('');
     useEffect(() => {
         if (router.query.id === undefined) {
             return;
         }
 
-        paymentRequest(router.query.id)
-        .then(function (result) {
-            console.log("Entra al metodo ")
-           setmessage(result.status.message.description);
-            setcode(result.status.code);
-            
-            return result;
+        fetch(process.env.NEXT_PUBLIC_REST_API + '/paymentPH1/' + id, {
+            method: 'POST',
         })
-        .catch(function (error) {
-            console.log(
-                'The error is handled, continue normally. ' + error
-            );
-        });
-    }, [router.query.id])
+            .then((res) => res.json())
+            .then((res) => {
+                setmessage(res.status.message);
+                setcode(result.status.code);
+            })
+            .catch(function (error) {
+                console.log(
+                    'The error is handled, continue normally. ' + error
+                );
+            });
 
-  
+    }, [router.query.id]);
 
     return (
         <Flex height="100vh" alignItems="center" justifyContent="center">
