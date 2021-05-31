@@ -30,7 +30,7 @@ const transaction = () => {
     if (router.query.id != undefined) {
         paymentRequest(router.query.id)
             .then(function (result) {
-                console.log(result.status.message)
+                console.log("Entra al metodo ")
                setmessage(result.status.message.description);
                 setcode(result.status.code);
                 
