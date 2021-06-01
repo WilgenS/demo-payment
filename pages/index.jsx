@@ -14,7 +14,7 @@ import { useState } from 'react';
  const Home = () =>{
    
     //Valor del input
-    const [value, setValue] = useState({total: '15.00'});
+    const [value, setValue] = useState(15.00);
 
     const router = useRouter();
     return (

@@ -43,8 +43,8 @@ const transaction = () => {
                 p={12}
                 rounded={10}
             >
-                <Heading color={code === "000.100.110" ? 'green' : 'red'} mb={10}>
-                    {code === "000.100.110"
+                <Heading color={code == process.env.NEXT_PUBLIC_API_SUCCESS_RESPONSE ? 'green' : 'red'} mb={10}>
+                    {code == process.env.NEXT_PUBLIC_API_SUCCESS_RESPONSE
                         ? 'Transaccion completada en modo test'
                         : 'Error: ' + message}
                 </Heading>
