@@ -35,14 +35,14 @@ const transaction = () => {
 
     return (
         <Flex height="100vh" alignItems="center" justifyContent="center">
-            <Flex
-                direction="column"
-                background="gray.100"
-                mb={10}
-                p={12}
-                rounded={10}
-            >
-                {code ? (
+            {code ? (
+                <Flex
+                    direction="column"
+                    background="gray.100"
+                    mb={10}
+                    p={12}
+                    rounded={10}
+                >
                     <Heading
                         color={
                             code == process.env.NEXT_PUBLIC_API_SUCCESS_RESPONSE
@@ -55,8 +55,8 @@ const transaction = () => {
                             ? 'Transaccion completada en modo test'
                             : 'Error: ' + message}
                     </Heading>
-                ) : null}
-            </Flex>
+                </Flex>
+            ) : null}
         </Flex>
     );
 };
