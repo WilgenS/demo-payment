@@ -33,7 +33,7 @@ const transaction = () => {
             .catch(function (error) {
                 console.log('The error is handled, continue normally. ', error);
             });
-    }, [router.query.id]);
+    }, [router.query.id, code]);
 
     return (
         <Flex height="100vh" alignItems="center" justifyContent="center">
