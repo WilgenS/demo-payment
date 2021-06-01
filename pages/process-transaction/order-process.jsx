@@ -21,8 +21,13 @@ const transaction = () => {
             .then((res) => res.json())
             .then((res) => {
                 console.log(res.status);
+                console.log(res.status.code);
+
                 setmessage(res.status.message + '\n');
                 setcode(result.status.code);
+
+                console.log(code);
+
             })
             .catch(function (error) {
                 console.log('The error is handled, continue normally. ', error);
