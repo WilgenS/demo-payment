@@ -21,10 +21,9 @@ const transaction = () => {
             .then((res) => res.json())
             .then((res) => {
                 console.log(res.status);
-                console.log(res.status.code);
 
                 setmessage(res.status.message + '\n');
-                setcode(result.status.code);
+                setcode(res.status.code);
 
                 console.log("Codigo del api",code);
                 console.log("Variable de entorno",process.env.NEXT_PUBLIC_API_SUCCESS_RESPONSE);
