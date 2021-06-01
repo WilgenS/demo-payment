@@ -35,28 +35,26 @@ const transaction = () => {
 
     return (
         <Flex height="100vh" alignItems="center" justifyContent="center">
-            {code ? (
-                <Flex
-                    direction="column"
-                    background="gray.100"
+            <Flex
+                direction="column"
+                background="gray.100"
+                mb={10}
+                p={12}
+                rounded={10}
+            >
+                <Heading
+                    color={
+                        code == process.env.NEXT_PUBLIC_API_SUCCESS_RESPONSE
+                            ? 'green'
+                            : 'red'
+                    }
                     mb={10}
-                    p={12}
-                    rounded={10}
                 >
-                    <Heading
-                        color={
-                            code == process.env.NEXT_PUBLIC_API_SUCCESS_RESPONSE
-                                ? 'green'
-                                : 'red'
-                        }
-                        mb={10}
-                    >
-                        {code == process.env.NEXT_PUBLIC_API_SUCCESS_RESPONSE
-                            ? 'Transaccion completada en modo test'
-                            : 'Error: ' + message}
-                    </Heading>
-                </Flex>
-            ) : null}
+                    {code == process.env.NEXT_PUBLIC_API_SUCCESS_RESPONSE
+                        ? 'Transaccion completada en modo test'
+                        : 'Error: ' + message}
+                </Heading>
+            </Flex>
         </Flex>
     );
 };
