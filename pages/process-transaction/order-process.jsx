@@ -20,19 +20,14 @@ const transaction = () => {
         )
             .then((res) => res.json())
             .then((res) => {
-                console.log(res.status);
-
                 setmessage(res.status.message + '\n');
                 setcode(res.status.code);
 
-                console.log("Codigo del api",code);
-                console.log("Variable de entorno",process.env.NEXT_PUBLIC_API_SUCCESS_RESPONSE);
             })
             .catch(function (error) {
                 console.log('The error is handled, continue normally. ', error);
             });
-    }, [router.query.id, code]);
-    console.log("respuesta de validación", code ===process.env.NEXT_PUBLIC_API_SUCCESS_RESPONSE)
+    }, [router.query.id]);
 
     return (
         <Flex height="100vh" alignItems="center" justifyContent="center">
