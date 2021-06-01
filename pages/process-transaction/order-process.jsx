@@ -3,8 +3,6 @@ import { useRouter } from 'next/router';
 import { Flex, Heading } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 
-
-
 const transaction = () => {
     const router = useRouter();
     const [message, setmessage] = useState('');
@@ -44,18 +42,20 @@ const transaction = () => {
                 p={12}
                 rounded={10}
             >
-               { code ? <Heading
-                    color={
-                        code == process.env.NEXT_PUBLIC_API_SUCCESS_RESPONSE
-                            ? 'green'
-                            : 'red'
-                    }
-                    mb={10}
-                >
-                    {code == process.env.NEXT_PUBLIC_API_SUCCESS_RESPONSE
-                        ? 'Transaccion completada en modo test'
-                        : 'Error: ' + message}
-                </Heading> : null}
+                {code ? (
+                    <Heading
+                        color={
+                            code == process.env.NEXT_PUBLIC_API_SUCCESS_RESPONSE
+                                ? 'green'
+                                : 'red'
+                        }
+                        mb={10}
+                    >
+                        {code == process.env.NEXT_PUBLIC_API_SUCCESS_RESPONSE
+                            ? 'Transaccion completada en modo test'
+                            : 'Error: ' + message}
+                    </Heading>
+                ) : null}
             </Flex>
         </Flex>
     );
