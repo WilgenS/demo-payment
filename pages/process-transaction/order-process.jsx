@@ -20,13 +20,15 @@ const transaction = () => {
         )
             .then((res) => res.json())
             .then((res) => {
-                setmessage(res.status.message + '\n');
+                console.log(res)
+                setmessage(res.status.message);
                 setcode(res.status.code);
 
             })
             .catch(function (error) {
                 console.log('The error is handled, continue normally. ', error);
             });
+
     }, [router.query.id]);
 
     return (

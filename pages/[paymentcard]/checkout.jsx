@@ -33,7 +33,7 @@ async function checkoutValue() {
 
 const paymentcard = () => {
     const url = process.env.NEXT_PUBLIC_ShopperResultUrl;
-    const [checkout, setcheckout] = useState({ checkOutId: '' });
+    const [checkout, setcheckout] = useState(null);
     const router = useRouter();
 
 
@@ -56,7 +56,6 @@ const paymentcard = () => {
         })
             .then((res) => res.json())
             .then((res) => {
-               console.log("Token Return");
                 if (res.data != undefined) {
                     setcheckout(res.data.checkOutId);
                 }
@@ -69,12 +68,12 @@ const paymentcard = () => {
     return (
         <div>
             <Head>
-                <script
+                {checkout && <script
                     src={
                         'https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=' +
                         checkout
                     }
-                ></script>
+                ></script>}
             </Head>
             <Flex height="100vh" alignItems="center" justifyContent="center">
                 <form
