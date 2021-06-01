@@ -26,12 +26,14 @@ const transaction = () => {
                 setmessage(res.status.message + '\n');
                 setcode(result.status.code);
 
-                console.log(code);
+                console.log("Codigo del api",code);
+                console.log("Variable de entorno",process.env.NEXT_PUBLIC_API_SUCCESS_RESPONSE);
             })
             .catch(function (error) {
                 console.log('The error is handled, continue normally. ', error);
             });
     }, [router.query.id, code]);
+    console.log("respuesta de validación", code ===process.env.NEXT_PUBLIC_API_SUCCESS_RESPONSE)
 
     return (
         <Flex height="100vh" alignItems="center" justifyContent="center">
@@ -50,9 +52,7 @@ const transaction = () => {
                     }
                     mb={10}
                 >
-                    {code == process.env.NEXT_PUBLIC_API_SUCCESS_RESPONSE
-                        ? 'Transaccion completada en modo test'
-                        : 'Error: ' + message}
+                    { message}
                 </Heading>
             </Flex>
         </Flex>
