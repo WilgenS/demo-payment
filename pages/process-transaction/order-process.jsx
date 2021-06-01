@@ -38,8 +38,8 @@ const transaction = () => {
                 p={12}
                 rounded={10}
             >
-                <Heading color={code === 200 ? 'green' : 'red'} mb={10}>
-                    {code === 200
+                <Heading color={code === "000.100.110" ? 'green' : 'red'} mb={10}>
+                    {code === "000.100.110"
                         ? 'Transaccion completada en modo test'
                         : 'Error: ' + message}
                 </Heading>
