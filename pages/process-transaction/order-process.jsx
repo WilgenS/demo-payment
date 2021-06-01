@@ -44,7 +44,7 @@ const transaction = () => {
                 p={12}
                 rounded={10}
             >
-               { code && <Heading
+               { code ? <Heading
                     color={
                         code == process.env.NEXT_PUBLIC_API_SUCCESS_RESPONSE
                             ? 'green'
@@ -55,7 +55,7 @@ const transaction = () => {
                     {code == process.env.NEXT_PUBLIC_API_SUCCESS_RESPONSE
                         ? 'Transaccion completada en modo test'
                         : 'Error: ' + message}
-                </Heading>}
+                </Heading> : null}
             </Flex>
         </Flex>
     );
