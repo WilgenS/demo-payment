@@ -6,8 +6,6 @@ module.exports = {
       // !! WARN !!
       ignoreBuildErrors: true,
     },
-   pageExtensions: ["personal-info-form.jsx", "products.jsx"]
-
-
+   //pageExtensions: ["personal-info-form.jsx", "products.jsx"]
   }
   

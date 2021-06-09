@@ -8,8 +8,8 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import PersonalInfoForm from './personal-info-form';
-import Products from './products';
+import PersonalInfoForm from '../components/personal-info-form';
+import Products from '../components/products';
 import { useRouter } from 'next/router';
 
 export default function Checkout() {
