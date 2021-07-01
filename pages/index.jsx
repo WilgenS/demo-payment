@@ -12,48 +12,47 @@ import PersonalInfoForm from '../components/personal-info-form';
 import Products from '../components/products';
 import { useRouter } from 'next/router';
 
-export default function Checkout() {
+const useStyles = makeStyles((theme) => ({
+    layout: {
+        width: 'auto',
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2),
+        [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
+            width: 600,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+        },
+    },
+    paper: {
+        marginTop: theme.spacing(3),
+        marginBottom: theme.spacing(3),
+        padding: theme.spacing(2),
+        [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+            marginTop: theme.spacing(6),
+            marginBottom: theme.spacing(6),
+            padding: theme.spacing(3),
+        },
+    },
+    stepper: {
+        padding: theme.spacing(3, 0, 5),
+    },
+    buttons: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+    },
+    button: {
+        marginTop: theme.spacing(3),
+        marginLeft: theme.spacing(1),
+    },
+}));
 
-    const useStyles = makeStyles((theme) => ({
-        layout: {
-            width: 'auto',
-            marginLeft: theme.spacing(2),
-            marginRight: theme.spacing(2),
-            [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-                width: 600,
-                marginLeft: 'auto',
-                marginRight: 'auto',
-            },
-        },
-        paper: {
-            marginTop: theme.spacing(3),
-            marginBottom: theme.spacing(3),
-            padding: theme.spacing(2),
-            [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-                marginTop: theme.spacing(6),
-                marginBottom: theme.spacing(6),
-                padding: theme.spacing(3),
-            },
-        },
-        stepper: {
-            padding: theme.spacing(3, 0, 5),
-        },
-        buttons: {
-            display: 'flex',
-            justifyContent: 'flex-end',
-        },
-        button: {
-            marginTop: theme.spacing(3),
-            marginLeft: theme.spacing(1),
-        },
-    }));
-    
+export default function Checkout() {
     const router = useRouter();
 
     const steps = ['Datos Personales', 'Productos'];
 
     const classes = useStyles();
-    
+
     const [activeStep, setActiveStep] = React.useState(0);
     //personal-info
     const [value, setValue] = useState({
@@ -63,25 +62,29 @@ export default function Checkout() {
         telefono: '',
         direccion: '',
         tipoDocumento: 1,
-        documento: ''
+        documento: '',
     });
 
     //Producto
-    const [productValue, setProductValue] = useState({
-        master: '',
-        sfx: '',
-        licensePlate: '',
-        linea: '',
-        precio: ''
-    })
+    const [productValue, setProductValue] = useState([]);
 
     function getStepContent(step) {
         switch (step) {
             case 0:
-                return <PersonalInfoForm personalInfo={value} setPersonalInfo={setValue}/>;
+                return (
+                    <PersonalInfoForm
+                        personalInfo={value}
+                        setPersonalInfo={setValue}
+                    />
+                );
             case 1:
-                return <Products product={productValue} setProduct={setProductValue}/>;
-    
+                return (
+                    <Products
+                        product={productValue}
+                        setProduct={setProductValue}
+                    />
+                );
+
             default:
                 console.log('Unknown step');
         }
@@ -96,30 +99,27 @@ export default function Checkout() {
     };
 
     const GetcheckOutId = () => {
-        console.log("Metodo");
+        const amount = productValue.reduce(
+            (prev, next) => parseFloat(prev) + parseFloat(next.price),
+            0
+        );
+
         fetch(process.env.NEXT_PUBLIC_REST_API + '/token_create', {
             body: JSON.stringify({
-                amount: productValue.precio,
-                amountBase0: 1,
-                amountBaseImp: 1,
-                amountIVA: 1,
-                customer:{
+                amount: amount,
+                amountBase0: amount,
+                amountBaseImp: 0,
+                amountIVA: 0,
+                customer: {
                     documentId: value.documento,
                     documentType: value.tipoDocumento,
                     names: value.nombre,
                     lastname: value.apellido,
                     emailAddress: value.correo,
                     mobileNumber: value.telefono,
-                    address: value.direccion
+                    address: value.direccion,
                 },
-                products: [
-                    {
-                        master: productValue.master,
-                        sfx: productValue.sfx,
-                        licensePlate: productValue.licensePlate,
-                        businessLine: productValue.linea
-                    }
-                ]
+                products: productValue,
             }),
             headers: {
                 'Content-Type': 'application/json',
@@ -128,15 +128,14 @@ export default function Checkout() {
         })
             .then((res) => res.json())
             .then((res) => {
-                console.log("data", res);
+                console.log('data', res);
                 if (res.data != undefined) {
-                    router.push('/'+ res.data.checkOutId +'/checkout')
+                    router.push('/' + res.data.checkOutId + '/checkout');
                 }
             })
             .catch(function (error) {
                 console.log('The error is handled, continue normally. ', error);
             });
-
     };
 
     return (
